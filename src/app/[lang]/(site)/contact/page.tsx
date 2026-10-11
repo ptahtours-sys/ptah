@@ -90,26 +90,41 @@ export default async function ContactPage() {
             </p>
           </div>
 
-          {/* Meet your guide */}
+          {/* Meet your guides */}
           <div className="mt-6 rounded-2xl border border-grey-300/60 bg-papyrus/40 p-6">
-            <h2 className="text-card-title font-bold text-ink">Your tour guide</h2>
-            <div className="mt-4 flex items-center gap-4">
-              <Image
-                src="/assets/team/refaat-boulus.jpg"
-                alt="Refaat Kadiss Mikhaiel Boulus — English and Arabic tour guide"
-                width={96}
-                height={96}
-                className="h-24 w-24 shrink-0 rounded-full object-cover"
-              />
-              <div className="min-w-0">
-                <p className="font-semibold text-ink">Refaat Kadiss Mikhaiel Boulus</p>
-                <p className="mt-0.5 text-meta text-ink/60">English and Arabic Tour Guide</p>
-                <a
-                  href="mailto:refaat@ptahtours.com"
-                  className="mt-1 inline-block break-all text-meta font-semibold text-nile hover:underline"
-                >
-                  refaat@ptahtours.com
-                </a>
+            <h2 className="text-card-title font-bold text-ink">Your tour guides</h2>
+            <div className="mt-4 space-y-5">
+              <div className="flex items-center gap-4">
+                <Image
+                  src="/assets/team/refaat-boulus.jpg"
+                  alt="Refaat Kadiss Mikhaiel Boulus — English and Arabic tour guide"
+                  width={96}
+                  height={96}
+                  className="h-24 w-24 shrink-0 rounded-full object-cover"
+                />
+                <div className="min-w-0">
+                  <p className="font-semibold text-ink">Refaat Kadiss Mikhaiel Boulus</p>
+                  <p className="mt-0.5 text-meta text-ink/60">English and Arabic Tour Guide</p>
+                  <a
+                    href="mailto:refaat@ptahtours.com"
+                    className="mt-1 inline-block break-all text-meta font-semibold text-nile hover:underline"
+                  >
+                    refaat@ptahtours.com
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 border-t border-grey-300/50 pt-5">
+                <Image
+                  src="/assets/team/hamdi-harun.jpg"
+                  alt="Hamdi Harun — English and Arabic tour guide"
+                  width={96}
+                  height={96}
+                  className="h-24 w-24 shrink-0 rounded-full object-cover"
+                />
+                <div className="min-w-0">
+                  <p className="font-semibold text-ink">Hamdi Harun</p>
+                  <p className="mt-0.5 text-meta text-ink/60">English and Arabic Tour Guide</p>
+                </div>
               </div>
             </div>
           </div>
