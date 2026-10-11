@@ -14,9 +14,9 @@ export const metadata: Metadata = {
   title: "Admin",
   robots: { index: false, follow: false },
   // Point the admin area at its OWN web app manifest — a separate installable
-  // PWA (see app/admin.webmanifest/route.ts). Set on the admin root layout, it
-  // overrides the site manifest link that app/manifest.ts injects, so admin
-  // pages advertise only the "Ptah … Admin" app.
+  // PWA (see app/admin.webmanifest/route.ts). Each root layout links its own
+  // manifest explicitly (the public [lang] root links /manifest.webmanifest), so
+  // admin pages advertise only the "Ptah … Admin" app and install separately.
   manifest: "/admin.webmanifest",
 };
 

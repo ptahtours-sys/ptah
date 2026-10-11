@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import ContactForm from "@/components/marketing/ContactForm";
@@ -87,6 +88,30 @@ export default async function ContactPage() {
               inspired by our{" "}
               <a href="/trip-ideas" className="font-semibold text-rust hover:underline">trip ideas</a>.
             </p>
+          </div>
+
+          {/* Meet your guide */}
+          <div className="mt-6 rounded-2xl border border-grey-300/60 bg-papyrus/40 p-6">
+            <h2 className="text-card-title font-bold text-ink">Your tour guide</h2>
+            <div className="mt-4 flex items-center gap-4">
+              <Image
+                src="/assets/team/refaat-boulus.jpg"
+                alt="Refaat Kadiss Mikhaiel Boulus — English and Arabic tour guide"
+                width={96}
+                height={96}
+                className="h-24 w-24 shrink-0 rounded-full object-cover"
+              />
+              <div className="min-w-0">
+                <p className="font-semibold text-ink">Refaat Kadiss Mikhaiel Boulus</p>
+                <p className="mt-0.5 text-meta text-ink/60">English and Arabic Tour Guide</p>
+                <a
+                  href="mailto:refaat@ptahtours.com"
+                  className="mt-1 inline-block break-all text-meta font-semibold text-nile hover:underline"
+                >
+                  refaat@ptahtours.com
+                </a>
+              </div>
+            </div>
           </div>
         </aside>
       </div>

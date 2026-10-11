@@ -68,8 +68,12 @@ export async function generateMetadata({
       // Always-on apple-touch icon (opaque 180×180) for iOS "Add to Home Screen".
       apple: "/icons/apple-touch-180.png",
     },
-    // PWA (spec §3): the <link rel="manifest"> is auto-injected by app/manifest.ts.
-    // appleWebApp gives installed iOS users the standalone display + branded title bar.
+    // PWA (spec §3): link the public manifest explicitly (served by
+    // app/manifest.webmanifest/route.ts). Explicit per-root linking keeps the
+    // admin area's own manifest from colliding with the public one, so the two
+    // install as separate apps. appleWebApp gives installed iOS users the
+    // standalone display + branded title bar.
+    manifest: "/manifest.webmanifest",
     appleWebApp: { capable: true, title: name, statusBarStyle: "default" },
     openGraph: {
       siteName: name,
