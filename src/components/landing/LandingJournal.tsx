@@ -60,7 +60,7 @@ export default async function LandingJournal({ locale }: { locale: Locale }): Pr
                 {post.title}
               </h3>
               <p className="mt-2 line-clamp-3 text-meta text-ink/65">{post.summary}</p>
-              <p className="mt-4 text-meta text-ink/50">
+              <p className="mt-4 text-meta text-ink/70">
                 {formatBlogDate(post.publishedISO, locale)} · {post.readMinutes} {t.minRead}
               </p>
             </div>

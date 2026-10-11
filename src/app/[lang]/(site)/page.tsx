@@ -13,6 +13,7 @@ import { getLandingContent } from "@/server/content";
 import { getLandingDefaults } from "@/content/localized/landing";
 import { getPageContent } from "@/i18n/pages";
 import { toLocale, localeHtmlLang, type Locale } from "@/i18n/config";
+import { localizePath } from "@/i18n/routing";
 import { listPublishedToursForDestinations, type TourListItem } from "@/server/catalog";
 import { FOCUS_DESTINATION_SLUGS, focusRank } from "@/content/tour-tags";
 import { logger } from "@/lib/logger";
@@ -45,11 +46,15 @@ async function getFocusTours(locale: Locale): Promise<TourListItem[]> {
    on-save revalidatePath). Reads no cookies/headers → not per-request dynamic. */
 export const revalidate = 60;
 
-/* Canonical for the landing route only — the layout sets no canonical, so
-   other routes stay free to declare their own (§9 head conventions). */
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-};
+/* Canonical for the landing route. The real indexable URL is locale-prefixed
+   (e.g. /en — the proxy 307-redirects "/" to it), so the canonical must carry
+   the locale rather than the bare "/" (which pointed at a redirecting URL). */
+export async function generateMetadata(
+  { params }: { params: Promise<{ lang: string }> },
+): Promise<Metadata> {
+  const { lang } = await params;
+  return { alternates: { canonical: localizePath("/", toLocale(lang)) } };
+}
 
 /**
  * Landing page (design.md §3, DOM order).

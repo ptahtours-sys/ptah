@@ -72,7 +72,7 @@ export default function TourCard({
         </h3>
         <p className="mt-2 line-clamp-2 text-meta text-ink/65">{tour.summary}</p>
 
-        <div className="mt-3 flex items-center gap-2 text-meta text-ink/60">
+        <div className="mt-3 flex items-center gap-2 text-meta text-ink/70">
           <span>{DIFFICULTY_LABEL[tour.difficulty] ?? tour.difficulty}</span>
           {tour.nextDeparture && (
             <>
@@ -84,10 +84,10 @@ export default function TourCard({
 
         <div className="mt-4 flex items-end justify-between border-t border-grey-300/50 pt-4">
           <div>
-            <p className="text-[11px] uppercase tracking-wide text-ink/50">From</p>
+            <p className="text-[11px] uppercase tracking-wide text-ink/70">From</p>
             <p className="text-lg font-bold text-nile">
               {formatPriceCents(tour.fromPriceCents, tour.currency)}
-              <span className="text-[11px] font-normal text-ink/50"> /person</span>
+              <span className="text-[11px] font-normal text-ink/70"> /person</span>
             </p>
           </div>
           <span className="rounded-full border border-nile/20 px-4 py-2 text-[13px] font-semibold text-nile transition-colors group-hover:border-rust group-hover:text-rust">

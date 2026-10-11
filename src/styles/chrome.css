@@ -792,7 +792,7 @@
   opacity: 0.85;
   transition: var(--transition-hover);
 }
-.partner-mark small { display: block; font-weight: 400; font-size: 11px; opacity: 0.7; }
+.partner-mark small { display: block; font-weight: 400; font-size: 11px; opacity: 0.85; }
 @media (hover: hover) {
   .partner-mark:hover { color: var(--color-nile); opacity: 1; }
 }
@@ -868,15 +868,19 @@
   color: var(--color-ink);
   box-shadow: 0 -8px 40px rgb(0 0 0 / 0.16);
   transform: translateY(102%);
-  visibility: hidden;
-  /* close: reverse 0.2s (§4.8.13); visibility flips after the slide finishes */
-  transition: transform 0.2s ease-out, visibility 0s 0.2s;
+  pointer-events: none;
+  /* close: reverse slide 0.2s (§4.8.13). Composited transform ONLY — no
+     visibility transition: visibility is inherited and cascades a
+     non-composited animation onto the buttons. pointer-events + the off-screen
+     transform make the closed sheet non-interactive; the component also toggles
+     `inert` so it leaves the a11y/tab order while closed. */
+  transition: transform 0.2s ease-out;
   max-height: min(85dvh, 44rem);
   overflow-y: auto;
 }
 .cookie-banner[data-open="true"] {
   transform: translateY(0);
-  visibility: visible;
+  pointer-events: auto;
   /* first paint: sheet raise 0.3s ease-out (§4.8.13) */
   transition: transform 0.3s ease-out;
 }

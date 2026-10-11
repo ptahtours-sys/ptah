@@ -49,11 +49,13 @@ export interface SiteHeaderChromeProps {
   t: HeaderChromeStrings;
   /** DB-driven header logo src ("/api/media/<id>"); null → built-in SVG wordmark. */
   logoSrc?: string | null;
+  logoWidth?: number | null;
+  logoHeight?: number | null;
   /** Site name for the logo's alt text (DB-driven). */
   siteName?: string;
 }
 
-export function SiteHeaderChrome({ nav, t, logoSrc = null, siteName = "Ptah Tours" }: SiteHeaderChromeProps): JSX.Element {
+export function SiteHeaderChrome({ nav, t, logoSrc = null, logoWidth = null, logoHeight = null, siteName = "Ptah Tours" }: SiteHeaderChromeProps): JSX.Element {
   const pathname = usePathname();
   const isDesktop = useMediaQuery(MQ_HEADER_DESKTOP);
   // Locale-agnostic home check: the home route is `/{locale}` (e.g. /en, /ar),
@@ -81,7 +83,7 @@ export function SiteHeaderChrome({ nav, t, logoSrc = null, siteName = "Ptah Tour
      built-in cartouche SVG wordmark. Rendered identically in all header slots. */
   const brandMark = logoSrc ? (
     // eslint-disable-next-line @next/next/no-img-element -- DB-driven header logo (variable dimensions).
-    <img src={logoSrc} alt={siteName} />
+    <img src={logoSrc} alt={siteName} width={logoWidth ?? undefined} height={logoHeight ?? undefined} />
   ) : (
     <SiteLogo />
   );

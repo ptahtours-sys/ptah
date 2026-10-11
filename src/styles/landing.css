@@ -936,14 +936,15 @@
   bottom: 0;
   display: flex;
   align-items: center;
+  gap: 4px;
   margin: 0;
   padding: 0 var(--container-padding);
   list-style: none;
 }
 .tt__dot {
-  width: 16px;
-  height: 16px;
-  padding: 5px;
+  width: 24px;
+  height: 24px;
+  padding: 9px;
   background-clip: content-box;
   background-color: var(--color-grey-300);
   border: 0;

@@ -18,6 +18,7 @@ import InstallButton from "@/components/pwa/InstallButton";
 import { getSettings } from "@/server/settings";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localizeFooter } from "@/i18n/chrome";
+import { getMedia } from "@/server/media";
 
 export async function SiteFooter(): Promise<JSX.Element> {
   const [settings, dict] = await Promise.all([getSettings(), getDictionary()]);
@@ -26,6 +27,7 @@ export async function SiteFooter(): Promise<JSX.Element> {
   const copyright = settings["branding.copyrightLine"].replace("{year}", String(year));
   const socials = settings["branding.socials"];
   const footerLogoId = settings["branding.footerLogoMediaId"];
+  const footerLogo = footerLogoId ? await getMedia(footerLogoId).catch(() => null) : null;
   const siteName = settings["branding.siteName"];
 
   return (
@@ -121,7 +123,7 @@ export async function SiteFooter(): Promise<JSX.Element> {
             <Link href="/" className="footer-legal__brand" aria-label={`${siteName} — ${dict.common.home}`}>
               {footerLogoId ? (
                 // eslint-disable-next-line @next/next/no-img-element -- DB-driven footer logo (variable dimensions).
-                <img src={`/api/media/${footerLogoId}`} alt={siteName} />
+                <img src={`/api/media/${footerLogoId}`} alt={siteName} width={footerLogo?.width ?? undefined} height={footerLogo?.height ?? undefined} />
               ) : (
                 <SiteLogo />
               )}

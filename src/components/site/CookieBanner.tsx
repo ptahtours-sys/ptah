@@ -183,7 +183,7 @@ export function CookieBanner({ content, labels }: CookieBannerProps): JSX.Elemen
   if (!mounted) return null;
 
   return (
-    <div className="cookie-banner" data-open={open} role="region" aria-label={labels.regionAria}>
+    <div className="cookie-banner" data-open={open} inert={!open} role="region" aria-label={labels.regionAria}>
       <div className="cookie-banner__inner" aria-labelledby={headingId}>
         <div className="cookie-banner__row">
           <div className="cookie-banner__copy">
