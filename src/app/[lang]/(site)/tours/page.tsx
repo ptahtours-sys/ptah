@@ -8,14 +8,14 @@ import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
 import { parseFinderParams, type FinderRawParams } from "@/content/tours-finder";
 import { TOUR_TAG_LABELS, LENGTH_BUCKETS } from "@/content/tour-tags";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Tours | Ptah Tours",
   description:
     "Browse every Ptah Tours departure across Egypt — Cairo, Luxor, the Nile, and the Red Sea. Private and small-group tours with licensed Egyptologist guides.",
   // Every filter/sort/page variant is a subset — canonicalize them all to the
   // base listing (what the sitemap lists).
-  alternates: { canonical: "/tours" },
 };
 
 // Catalog reads live data (capacity changes with bookings), so render dynamically.
@@ -81,4 +81,13 @@ export default async function ToursPage({
       />
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/tours", lang) };
 }

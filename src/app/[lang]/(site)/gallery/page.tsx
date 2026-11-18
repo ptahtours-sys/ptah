@@ -5,12 +5,12 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import GalleryGrid from "@/components/gallery/GalleryGrid";
 import { galleryPhotos } from "@/content/gallery";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Photo Gallery | Real Ptah Tours travelers across Egypt",
   description:
     "Real photographs from recent Ptah Tours journeys — our travelers and their guides at the temples, deserts and Nile villages of Egypt. No stock imagery.",
-  alternates: { canonical: "/gallery" },
 };
 
 /**
@@ -38,4 +38,13 @@ export default async function GalleryPage(): Promise<JSX.Element> {
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/gallery", lang) };
 }

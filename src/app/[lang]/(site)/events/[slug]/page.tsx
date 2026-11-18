@@ -9,6 +9,8 @@ import { getEventDetail, listPublishedEventSlugs } from "@/server/events";
 import { env } from "@/lib/env";
 import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
+import { localizePath } from "@/i18n/routing";
 
 // Read-only event detail (no request-time APIs) — ISR with a 5-minute window;
 // generateStaticParams pre-renders known slugs, admin mutations revalidate on demand.
@@ -31,11 +33,11 @@ export async function generateMetadata({
   return {
     title: `${event.metaTitle ?? event.title} | Ptah Tours`,
     description: event.metaDesc ?? event.summary,
-    alternates: { canonical },
+    alternates: localeAlternates(canonical, lang),
     openGraph: {
       title: event.metaTitle ?? event.title,
       description: event.metaDesc ?? event.summary,
-      url: canonical,
+      url: localizePath(canonical, toLocale(lang)),
       images: (event.ogImage ?? event.heroImage) ? [{ url: (event.ogImage ?? event.heroImage) as string }] : undefined,
       type: "website",
     },

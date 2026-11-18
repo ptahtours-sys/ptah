@@ -3,12 +3,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import NewsletterForm from "@/components/marketing/NewsletterForm";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Newsletter | Ptah Tours",
   description:
     "Join the Ptah Tours newsletter for stories from Egypt, seasonal travel tips, and the occasional quiet-season offer. No spam — unsubscribe any time.",
-  alternates: { canonical: "/newsletter" },
 };
 
 export default async function NewsletterPage() {
@@ -49,4 +49,13 @@ export default async function NewsletterPage() {
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/newsletter", lang) };
 }

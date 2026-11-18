@@ -4,12 +4,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "How Many Days in Egypt? | Ptah Tours",
   description:
     "How many days do you need in Egypt? A practical guide to trip length — from a 3-day Cairo taster to a two-week grand tour of the Nile, Red Sea, and beyond.",
-  alternates: { canonical: "/how-many-days" },
 };
 
 // Filter links for the trip-length cards, index-aligned with `howManyDays.durations`.
@@ -88,4 +88,13 @@ export default async function HowManyDaysPage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/how-many-days", lang) };
 }

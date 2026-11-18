@@ -32,6 +32,7 @@ import { getThemeEditorial } from "@/content/localized/theme-content";
 import { getCityContent } from "@/content/localized/city-content";
 import { getUiSupplemental } from "@/content/localized/ui-supplemental";
 import { cityMedia, cityImage, type CitySlug } from "@/content/city-media";
+import { localeAlternates } from "@/lib/seo/alternates";
 
 // City slugs are static content; the tour list + session are read at request
 // time (force-dynamic), so params stay static but data stays live.
@@ -57,7 +58,7 @@ export async function generateMetadata({
     title: content.seo.title,
     description: content.seo.description,
     keywords: content.seo.keywords,
-    alternates: { canonical: `/cities/${slug}` },
+    alternates: localeAlternates(`/cities/${slug}`, lang),
     openGraph: {
       title: content.seo.title,
       description: content.seo.description,

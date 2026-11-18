@@ -3,12 +3,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Reviews & Accreditations | Ptah Tours",
   description:
     "What travelers say about their Ptah Tours journeys, and the industry bodies we work with. Licensed guiding, honest pricing, and trips built by a team who calls Egypt home.",
-  alternates: { canonical: "/reviews" },
 };
 
 export default async function ReviewsPage() {
@@ -66,4 +66,13 @@ export default async function ReviewsPage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/reviews", lang) };
 }

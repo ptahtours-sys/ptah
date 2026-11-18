@@ -5,6 +5,9 @@ import { listPublishedEventSlugs, listPublishedTripIdeaSlugs } from "@/server/ev
 import { logger } from "@/lib/logger";
 import { locales, localeHtmlLang, defaultLocale } from "@/i18n/config";
 import { localizePath } from "@/i18n/routing";
+import { cities } from "@/lib/cities";
+import { countries } from "@/lib/countries";
+import { blogSlugs } from "@/content/blog";
 
 /**
  * Dynamic sitemap (Phase 5, Q15). Lists the indexable public surface only —
@@ -29,6 +32,27 @@ const STATIC_ROUTES: { path: string; changeFrequency: MetadataRoute.Sitemap[numb
   { path: "/events", changeFrequency: "weekly", priority: 0.7 },
   { path: "/cities", changeFrequency: "weekly", priority: 0.7 },
   { path: "/countries", changeFrequency: "weekly", priority: 0.6 },
+  { path: "/blog", changeFrequency: "weekly", priority: 0.6 },
+  { path: "/the-nile", changeFrequency: "monthly", priority: 0.6 },
+  { path: "/red-sea", changeFrequency: "monthly", priority: 0.6 },
+  { path: "/deserts", changeFrequency: "monthly", priority: 0.6 },
+  { path: "/heritage", changeFrequency: "monthly", priority: 0.6 },
+  { path: "/when-to-visit", changeFrequency: "monthly", priority: 0.6 },
+  { path: "/how-many-days", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/getting-here", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/getting-around", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/visa", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/travel-tips", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/family-travel", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/accessibility", changeFrequency: "monthly", priority: 0.4 },
+  { path: "/responsible-travel", changeFrequency: "monthly", priority: 0.4 },
+  { path: "/how-it-works", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/faqs", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/reviews", changeFrequency: "weekly", priority: 0.5 },
+  { path: "/gallery", changeFrequency: "monthly", priority: 0.4 },
+  { path: "/careers", changeFrequency: "monthly", priority: 0.3 },
+  { path: "/press", changeFrequency: "monthly", priority: 0.3 },
+  { path: "/newsletter", changeFrequency: "yearly", priority: 0.3 },
   { path: "/about", changeFrequency: "monthly", priority: 0.5 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.5 },
   { path: "/track-booking", changeFrequency: "monthly", priority: 0.4 },
@@ -102,5 +126,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     localizedEntry(`/events/${slug}`, now, "weekly", 0.6),
   );
 
-  return [...staticEntries, ...tourEntries, ...tripIdeaEntries, ...eventEntries];
+  // Static-content detail pages (Search Console "Discovered – not indexed":
+  // these were reachable only via internal links, never listed here).
+  const contentEntries: MetadataRoute.Sitemap = [
+    ...cities.map((c) => localizedEntry(`/cities/${c.slug}`, now, "monthly", 0.7)),
+    ...countries.map((c) => localizedEntry(`/countries/${c.slug}`, now, "monthly", 0.6)),
+    ...blogSlugs().map((slug) => localizedEntry(`/blog/${slug}`, now, "monthly", 0.5)),
+  ];
+
+  return [...staticEntries, ...contentEntries, ...tourEntries, ...tripIdeaEntries, ...eventEntries];
 }

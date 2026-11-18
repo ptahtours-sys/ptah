@@ -8,6 +8,8 @@ import Button from "@/components/ui/Button";
 import { getBlogPost, blogSlugs, formatBlogDate } from "@/content/blog";
 import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
+import { localizePath } from "@/i18n/routing";
 
 export function generateStaticParams() {
   return blogSlugs().map((slug) => ({ slug }));
@@ -25,11 +27,11 @@ export async function generateMetadata({
   return {
     title: `${post.title} | Ptah Tours Journal`,
     description: post.summary,
-    alternates: { canonical },
+    alternates: localeAlternates(canonical, lang),
     openGraph: {
       title: post.title,
       description: post.summary,
-      url: canonical,
+      url: localizePath(canonical, toLocale(lang)),
       images: post.image.src ? [{ url: post.image.src }] : undefined,
       type: "article",
     },

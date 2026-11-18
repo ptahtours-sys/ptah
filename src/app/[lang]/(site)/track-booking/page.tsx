@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import Container from "@/components/layout/Container";
 import TrackBookingForm from "@/components/site/TrackBookingForm";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Track your booking | Ptah Tours",
   description:
     "Look up your Ptah Tours booking by reference and the email you booked with to see its latest status.",
-  alternates: { canonical: "/track-booking" },
 };
 
 export default async function TrackBookingPage({
@@ -33,4 +33,13 @@ export default async function TrackBookingPage({
       <TrackBookingForm defaultReference={ref ?? ""} labels={t} />
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/track-booking", lang) };
 }

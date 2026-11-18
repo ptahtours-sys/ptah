@@ -12,14 +12,14 @@ import { getThemeEditorial } from "@/content/localized/theme-content";
 import { themeMedia, themeImage } from "@/content/theme-media";
 import { getPageContent } from "@/i18n/pages";
 import { toLocale } from "@/i18n/config";
+import { localeAlternates } from "@/lib/seo/alternates";
 
 const THEME = "when-to-visit" as const;
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Best Time to Visit Egypt | Ptah Tours",
   description:
     "When to visit Egypt: a season-by-season guide to weather, crowds, and cost across Cairo, Luxor, Aswan, and the Red Sea — so you can pick the right time to travel.",
-  alternates: { canonical: "/when-to-visit" },
 };
 
 export default async function WhenToVisitPage({
@@ -109,4 +109,13 @@ export default async function WhenToVisitPage({
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/when-to-visit", lang) };
 }

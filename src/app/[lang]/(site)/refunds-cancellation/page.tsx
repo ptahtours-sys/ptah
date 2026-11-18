@@ -4,8 +4,9 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Refunds & Cancellation | Ptah Tours",
   description:
     "We understand that plans can shift. Here's how our cancellation and refund policy works, based on how much notice you give us.",
@@ -78,4 +79,13 @@ export default async function RefundsCancellationPage() {
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/refunds-cancellation", lang) };
 }

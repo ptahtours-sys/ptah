@@ -6,14 +6,14 @@ import { listPublishedTours } from "@/server/catalog";
 import { getSessionUser } from "@/server/auth/session";
 import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Trip Builder | Ptah Tours",
   description:
     "Build your Egypt trip: bookmark the tours you like, gather them in one place, and send us your shortlist to shape into a single private itinerary.",
-  alternates: { canonical: "/manage/trip-builder" },
 };
 
 export default async function TripBuilderPage({
@@ -49,4 +49,13 @@ export default async function TripBuilderPage({
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/manage/trip-builder", lang) };
 }

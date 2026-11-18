@@ -5,12 +5,12 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { featuredPhotos } from "@/content/gallery";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "About Ptah Tours | Egypt, curated by the people who call it home",
   description:
     "Ptah Tours is a Cairo-based team of Egyptologists, guides, and trip designers building private and small-group journeys across Egypt. Meet the people and the promises behind every itinerary.",
-  alternates: { canonical: "/about" },
 };
 
 export default async function AboutPage() {
@@ -144,4 +144,13 @@ export default async function AboutPage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/about", lang) };
 }

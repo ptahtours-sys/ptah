@@ -14,6 +14,8 @@ import { isSafeUrl } from "@/lib/safe-url";
 import { env } from "@/lib/env";
 import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
+import { localizePath } from "@/i18n/routing";
 
 export const dynamic = "force-dynamic";
 
@@ -34,11 +36,11 @@ export async function generateMetadata({
   return {
     title: `${tour.metaTitle ?? tour.title} | Ptah Tours`,
     description: tour.metaDesc ?? tour.summary,
-    alternates: { canonical },
+    alternates: localeAlternates(canonical, lang),
     openGraph: {
       title: tour.metaTitle ?? tour.title,
       description: tour.metaDesc ?? tour.summary,
-      url: canonical,
+      url: localizePath(canonical, toLocale(lang)),
       images: tour.ogImage ?? tour.heroImage ? [{ url: (tour.ogImage ?? tour.heroImage) as string }] : undefined,
       type: "website",
     },

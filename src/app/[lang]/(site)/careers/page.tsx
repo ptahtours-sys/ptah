@@ -3,12 +3,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Careers at Ptah Tours | Work in Egyptian Travel",
   description:
     "Join a Cairo-based team building thoughtful journeys across Egypt. The kinds of roles we hire for — guiding, trip design, and support — and how to introduce yourself.",
-  alternates: { canonical: "/careers" },
 };
 
 export default async function CareersPage() {
@@ -69,4 +69,13 @@ export default async function CareersPage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/careers", lang) };
 }
