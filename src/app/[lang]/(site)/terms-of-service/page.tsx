@@ -4,8 +4,9 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Terms of Service | Ptah Tours",
   description:
     "These terms govern your use of the Ptah Tours website and any booking you make. Please read them carefully before confirming a reservation.",
@@ -106,4 +107,13 @@ export default async function TermsOfServicePage() {
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/terms-of-service", lang) };
 }

@@ -6,12 +6,12 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { listPublishedTripIdeas } from "@/server/events";
 import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Trip Ideas | Ptah Tours",
   description:
     "Not sure where to start? Browse Ptah Tours' curated Egypt trip ideas — Nile cruises, family journeys, honeymoons, and more — each pairing an editorial guide with hand-picked tours.",
-  alternates: { canonical: "/trip-ideas" },
 };
 
 // Read-only editorial catalog (no request-time APIs) — ISR with a 5-minute
@@ -90,4 +90,13 @@ export default async function TripIdeasPage({
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/trip-ideas", lang) };
 }

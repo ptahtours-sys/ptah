@@ -12,8 +12,9 @@ import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
 import { cityContent } from "@/content/city-content";
 import { cityImage, type CitySlug } from "@/content/city-media";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Egypt Destinations & City Tours | Ptah Tours",
   description:
     "Explore Ptah Tours' Egypt destinations — Cairo, Luxor, Aswan, Alexandria, Hurghada and Sharm el-Sheikh — with guided day trips, excursions and private tours in every city.",
@@ -27,7 +28,6 @@ export const metadata: Metadata = {
     "Hurghada excursions",
     "Sharm el-Sheikh excursions",
   ],
-  alternates: { canonical: "/cities" },
   openGraph: {
     title: "Egypt Destinations & City Tours | Ptah Tours",
     description:
@@ -92,4 +92,13 @@ export default async function CitiesPage({
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/cities", lang) };
 }

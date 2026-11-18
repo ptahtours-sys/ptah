@@ -12,14 +12,14 @@ import { listPublishedTours } from "@/server/catalog";
 import { getSessionUser } from "@/server/auth/session";
 import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Red Sea Diving & Snorkeling Tours | Ptah Tours",
   description:
     "Warm water, walls of coral, and reef fish by the thousand — the Red Sea off Hurghada and Sharm El Sheikh is world-class year-round. Our snorkeling and diving tours, with licensed dive guides.",
-  alternates: { canonical: "/red-sea" },
 };
 
 const THEME = "red-sea" as const;
@@ -61,4 +61,13 @@ export default async function RedSeaPage({
       <ThemeGallery head={c.gallery} images={themeMedia[THEME]} labels={theme.galleryLabels} />
     </ThemeHub>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/red-sea", lang) };
 }

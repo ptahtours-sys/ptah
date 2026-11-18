@@ -10,6 +10,8 @@ import { getTripIdeaDetail, listPublishedTripIdeaSlugs, toTourListItem } from "@
 import { getSessionUser } from "@/server/auth/session";
 import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
+import { localizePath } from "@/i18n/routing";
 
 export const dynamic = "force-dynamic";
 
@@ -30,11 +32,11 @@ export async function generateMetadata({
   return {
     title: `${idea.metaTitle ?? idea.title} | Ptah Tours`,
     description: idea.metaDesc ?? idea.summary,
-    alternates: { canonical },
+    alternates: localeAlternates(canonical, lang),
     openGraph: {
       title: idea.metaTitle ?? idea.title,
       description: idea.metaDesc ?? idea.summary,
-      url: canonical,
+      url: localizePath(canonical, toLocale(lang)),
       images: (idea.ogImage ?? idea.heroImage) ? [{ url: (idea.ogImage ?? idea.heroImage) as string }] : undefined,
       type: "website",
     },

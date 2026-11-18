@@ -3,12 +3,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Family Travel in Egypt | Ptah Tours",
   description:
     "Egypt is a wonderful place to travel with children — pyramids, camel rides, felucca sails, and Red Sea reefs. How we design family-friendly trips: pacing, private guides, and kid-approved highlights.",
-  alternates: { canonical: "/family-travel" },
 };
 
 export default async function FamilyTravelPage() {
@@ -64,4 +64,13 @@ export default async function FamilyTravelPage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/family-travel", lang) };
 }

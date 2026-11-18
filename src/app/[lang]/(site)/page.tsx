@@ -17,6 +17,7 @@ import { localizePath } from "@/i18n/routing";
 import { listPublishedToursForDestinations, type TourListItem } from "@/server/catalog";
 import { FOCUS_DESTINATION_SLUGS, focusRank } from "@/content/tour-tags";
 import { logger } from "@/lib/logger";
+import { localeAlternates } from "@/lib/seo/alternates";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ptahtours.com";
 
@@ -53,7 +54,7 @@ export async function generateMetadata(
   { params }: { params: Promise<{ lang: string }> },
 ): Promise<Metadata> {
   const { lang } = await params;
-  return { alternates: { canonical: localizePath("/", toLocale(lang)) } };
+  return { alternates: localeAlternates("/", lang) };
 }
 
 /**

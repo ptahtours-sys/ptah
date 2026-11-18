@@ -3,12 +3,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Flying Into Egypt | Ptah Tours",
   description:
     "Getting to Egypt: the main international gateways at Cairo, Luxor, Hurghada, Sharm El Sheikh, and Aswan — plus what to expect on arrival and how we handle transfers.",
-  alternates: { canonical: "/getting-here" },
 };
 
 export default async function GettingHerePage() {
@@ -89,4 +89,13 @@ export default async function GettingHerePage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/getting-here", lang) };
 }

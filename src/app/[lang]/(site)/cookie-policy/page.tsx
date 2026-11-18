@@ -4,8 +4,9 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Cookie Policy | Ptah Tours",
   description:
     "This cookie policy explains what cookies and similar tracking technologies we use, why we use them, and how you can control them.",
@@ -85,4 +86,13 @@ export default async function CookiePolicyPage() {
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/cookie-policy", lang) };
 }

@@ -3,12 +3,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "How It Works | Ptah Tours",
   description:
     "How booking a trip with Ptah Tours works, step by step — from choosing a tour to travelling Egypt with a licensed guide and 24/7 local support.",
-  alternates: { canonical: "/how-it-works" },
 };
 
 export default async function HowItWorksPage() {
@@ -75,4 +75,13 @@ export default async function HowItWorksPage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/how-it-works", lang) };
 }

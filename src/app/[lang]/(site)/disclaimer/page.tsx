@@ -4,8 +4,9 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Disclaimer | Ptah Tours",
   description:
     "The content on the Ptah Tours website is provided for general information purposes only. While we strive for accuracy, we cannot guarantee completeness or timeliness.",
@@ -85,4 +86,13 @@ export default async function DisclaimerPage() {
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/disclaimer", lang) };
 }

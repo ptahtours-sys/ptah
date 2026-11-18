@@ -3,12 +3,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Egypt Visa & Entry Guidance | Ptah Tours",
   description:
     "General guidance on entering Egypt — the e-Visa portal, visa on arrival, and passport validity. Always confirm current rules with official Egyptian sources before you travel.",
-  alternates: { canonical: "/visa" },
 };
 
 const OFFICIAL_PORTAL = "https://visa2egypt.gov.eg";
@@ -116,4 +116,13 @@ export default async function VisaPage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/visa", lang) };
 }

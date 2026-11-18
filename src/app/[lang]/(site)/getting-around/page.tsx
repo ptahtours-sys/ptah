@@ -3,12 +3,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Getting Around Egypt | Ptah Tours",
   description:
     "How to get around Egypt: domestic flights, sleeper trains, private drivers, Nile boats, and ride-hailing — and what Ptah Tours handles for you versus useful independent-travel tips.",
-  alternates: { canonical: "/getting-around" },
 };
 
 export default async function GettingAroundPage() {
@@ -75,4 +75,13 @@ export default async function GettingAroundPage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/getting-around", lang) };
 }

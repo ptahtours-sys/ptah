@@ -3,12 +3,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Frequently Asked Questions | Ptah Tours",
   description:
     "Answers to the questions travelers ask most before an Egypt trip — booking and payment, visas and safety, what's included, group sizes, and how to tailor a private itinerary.",
-  alternates: { canonical: "/faqs" },
 };
 
 export default async function FaqsPage() {
@@ -56,4 +56,13 @@ export default async function FaqsPage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/faqs", lang) };
 }

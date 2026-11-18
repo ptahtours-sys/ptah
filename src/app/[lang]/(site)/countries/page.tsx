@@ -8,8 +8,9 @@ import { citiesByCountry } from "@/lib/cities";
 import { getPublishedTourCountsByDestination } from "@/server/catalog";
 import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Countries | Ptah Tours",
   description:
     "Browse every country Ptah Tours operates in — Egypt, Jordan, Morocco, the UAE, Saudi Arabia and Albania.",
@@ -63,4 +64,13 @@ export default async function CountriesPage({
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/countries", lang) };
 }

@@ -3,12 +3,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Egypt Travel Health & Safety Tips | Ptah Tours",
   description:
     "Practical health and safety guidance for traveling in Egypt — staying hydrated in the heat, food and water, sun protection, money and valuables, and what to pack. General advice, not medical advice.",
-  alternates: { canonical: "/travel-tips" },
 };
 
 export default async function TravelTipsPage() {
@@ -70,4 +70,13 @@ export default async function TravelTipsPage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/travel-tips", lang) };
 }

@@ -5,12 +5,12 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import ContactForm from "@/components/marketing/ContactForm";
 import { getSettings } from "@/server/settings";
 import { normalizePhone } from "@/lib/safe-url";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Contact | Ptah Tours",
   description:
     "Get in touch with the Ptah Tours team in Cairo. Ask about a tour, plan a custom itinerary, or get help with an existing booking — we usually reply within one business day.",
-  alternates: { canonical: "/contact" },
 };
 
 // Reads DB-backed contact settings (admin-editable), so render dynamically.
@@ -132,4 +132,13 @@ export default async function ContactPage() {
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/contact", lang) };
 }

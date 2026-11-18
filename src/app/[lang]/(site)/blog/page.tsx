@@ -6,12 +6,12 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { getAllBlogPosts, formatBlogDate } from "@/content/blog";
 import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "The Ptah Tours Journal | Stories from Egypt",
   description:
     "Field notes and travel stories from our team in Egypt — Cairo beyond the guidebook, an evening at Karnak, Alexandria's Mediterranean soul, Red Sea reef etiquette, and slow days on the Nile.",
-  alternates: { canonical: "/blog" },
 };
 
 export default async function BlogIndexPage({
@@ -103,4 +103,13 @@ export default async function BlogIndexPage({
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/blog", lang) };
 }

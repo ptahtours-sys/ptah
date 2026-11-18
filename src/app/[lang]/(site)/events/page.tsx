@@ -6,12 +6,12 @@ import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { listPublishedEvents } from "@/server/events";
 import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Egypt Events & Festivals | Ptah Tours",
   description:
     "Time your trip around Egypt's cultural calendar — the Abu Simbel Sun Festival, moulids, and seasonal celebrations. Curated by the Cairo team at Ptah Tours.",
-  alternates: { canonical: "/events" },
 };
 
 // Read-only editorial catalog (no request-time APIs) — ISR with a 5-minute
@@ -104,4 +104,13 @@ export default async function EventsPage({
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/events", lang) };
 }

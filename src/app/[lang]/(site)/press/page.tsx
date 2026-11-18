@@ -3,12 +3,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Press & Media | Ptah Tours",
   description:
     "Media resources and press contact for Ptah Tours — a Cairo-based team building private and small-group journeys across Egypt. Request our media kit or get in touch for interviews and imagery.",
-  alternates: { canonical: "/press" },
 };
 
 export default async function PressPage() {
@@ -66,4 +66,13 @@ export default async function PressPage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/press", lang) };
 }

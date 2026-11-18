@@ -12,14 +12,14 @@ import { listPublishedTours } from "@/server/catalog";
 import { getSessionUser } from "@/server/auth/session";
 import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Heritage & History Tours in Egypt | Ptah Tours",
   description:
     "Egypt's greatest monuments, read by licensed Egyptologists — the pyramids of Giza, the temples of Luxor and Karnak, the tombs of the Valley of the Kings. Our heritage and history tours.",
-  alternates: { canonical: "/heritage" },
 };
 
 const THEME = "heritage" as const;
@@ -61,4 +61,13 @@ export default async function HeritagePage({
       <ThemeGallery head={c.gallery} images={themeMedia[THEME]} labels={theme.galleryLabels} />
     </ThemeHub>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/heritage", lang) };
 }

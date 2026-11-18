@@ -5,8 +5,9 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import { getSetting } from "@/server/settings";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Privacy Policy | Ptah Tours",
   description:
     "Ptah Tours is committed to protecting your personal data. This policy explains what we collect, why we collect it, and how you can control it.",
@@ -110,4 +111,13 @@ export default async function PrivacyPolicyPage() {
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/privacy-policy", lang) };
 }

@@ -18,6 +18,7 @@ import {
 import { getSessionUser } from "@/server/auth/session";
 import { toLocale } from "@/i18n/config";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
 export function generateStaticParams() {
   return countries.map((c) => ({ slug: c.slug }));
@@ -28,15 +29,15 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { lang, slug } = await params;
   const country = getCountry(slug);
   if (!country) return {};
   return {
     title: `${country.name} Tours | Ptah Tours`,
     description: country.intro,
-    alternates: { canonical: `/countries/${slug}` },
+    alternates: localeAlternates(`/countries/${slug}`, lang),
   };
 }
 

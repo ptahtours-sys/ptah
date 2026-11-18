@@ -3,12 +3,12 @@ import Container from "@/components/layout/Container";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import Button from "@/components/ui/Button";
 import { getPageContent } from "@/i18n/pages";
+import { localeAlternates } from "@/lib/seo/alternates";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Accessibility | Ptah Tours",
   description:
     "Our commitment to an accessible website and accessible travel in Egypt. How we build this site, how to tell us about access needs, and how we tailor trips for mobility, mobility aids, and more.",
-  alternates: { canonical: "/accessibility" },
 };
 
 export default async function AccessibilityPage() {
@@ -71,4 +71,13 @@ export default async function AccessibilityPage() {
       </section>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return { ...baseMetadata, alternates: localeAlternates("/accessibility", lang) };
 }
